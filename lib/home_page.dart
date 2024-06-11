@@ -28,17 +28,25 @@ class _HomePageState extends State<HomePage> {
   // controller.dart citation
   getData() async {
     DataController dataController = Get.put(DataController());
+    // var url = Uri.parse(
+    //     'https://en.wikipedia.org/wiki/List_of_universities_in_Pakistan');
     var url = Uri.parse(
-        'https://en.wikipedia.org/wiki/List_of_universities_in_Pakistan');
+        'https://regatta.time-team.nl/usrowing-youth-national/2024/results/races.php'); // couldn't get rowtown to work
     var response = await http.get(url);
     dom.Document document = parser.parse(response.body);
 
-    for (int i = 0; i <= 3; i++) {
+    for (int i = 0; i <= 0; i++) {
       var element = document.querySelectorAll('table>tbody')[i];
-      var data = element.querySelectorAll('tr');
-      for (int i = 1; i < data.length; i++) {
-        dataController.addName(data[i].children[0].text.toString().trim());
-        dataController.addLocation(data[i].children[1].text.toString().trim());
+      var data = element.querySelectorAll('tr[class="even"], tr[class="odd"]');
+      var heading = document.querySelectorAll('h3')[i];
+      var heading2 = document.querySelectorAll('h4')[i];
+      dataController.addHeader(heading.text.toString().trim());
+      dataController.addHeader2(heading2.text.toString().trim());
+      for (int j = 0; j < data.length; j++) {
+        dataController.addTime(data[j].children[0].text.toString().trim());
+        dataController.addNumber(data[j].children[1].text.toString().trim());
+        dataController.addRace(data[j].children[2].text.toString().trim());
+        dataController.addStatus(data[j].children[3].text.toString().trim());
       }
     }
   }
@@ -56,28 +64,113 @@ class _HomePageState extends State<HomePage> {
               body: SafeArea(
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: dataController.name.length,
+                      itemCount: dataController.time.length + 2,
                       itemBuilder: (BuildContext context, int index) {
+                        // row headers
+                        if (index == 0) {
+                          return Padding(
+                            padding: const EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Text(
+                                "${dataController.header[0]}, ${dataController.header2[0]}",
+                                style: const TextStyle(
+                                  fontSize: 25,
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.bold,
+                                )),
+                          );
+                        }
+
+                        if (index == 1) {
+                          return const Padding(
+                            padding: EdgeInsets.symmetric(
+                                horizontal: 15, vertical: 10),
+                            child: Row(
+                              children: [
+                                SizedBox(
+                                  width: 80,
+                                  child: Text("Time",
+                                      style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold,
+                                      )),
+                                ),
+                                // Spacer(flex: 1),
+                                SizedBox(
+                                  width: 80,
+                                  child: Text("No.",
+                                      style: TextStyle(
+                                          fontSize: 20,
+                                          color: Colors.white,
+                                          fontWeight: FontWeight.bold)),
+                                ),
+                                // Spacer(flex: 10),
+                                Text("Race",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
+                                Spacer(),
+                                Text("Status",
+                                    style: TextStyle(
+                                        fontSize: 20,
+                                        color: Colors.white,
+                                        fontWeight: FontWeight.bold)),
+                              ],
+                            ),
+                          );
+                        }
+
+                        index -= 2;
                         return Card(
                             child: Padding(
-                                padding: EdgeInsets.all(10),
+                                padding: const EdgeInsets.all(10),
                                 child: Row(
+                                  // mainAxisAlignment:
+                                  //     MainAxisAlignment.spaceBetween,
                                   children: [
-                                    Expanded(
-                                        child: Text(
-                                            dataController.name[index]
-                                                .toString()
-                                                .trim(),
-                                            style: const TextStyle(
-                                                fontSize: 20,
-                                                color: Colors.black,
-                                                fontWeight: FontWeight.bold))),
+                                    SizedBox(
+                                      width: 80,
+                                      child: Text(
+                                          dataController.time[index]
+                                              .toString()
+                                              .trim(),
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                    // Spacer(flex: 1),
+                                    SizedBox(
+                                      width: 80,
+                                      child: Text(
+                                          dataController.number[index]
+                                              .toString()
+                                              .trim(),
+                                          style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                          )),
+                                    ),
+                                    // Spacer(flex: 10),
                                     Text(
-                                        dataController.location[index]
+                                        dataController.race[index]
                                             .toString()
                                             .trim(),
                                         style: const TextStyle(
-                                            fontSize: 15, color: lightMaroon))
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold)),
+                                    const Spacer(),
+                                    Text(
+                                        dataController.status[index]
+                                            .toString()
+                                            .trim(),
+                                        style: const TextStyle(
+                                            fontSize: 13,
+                                            color: Colors.black,
+                                            fontWeight: FontWeight.bold)),
                                   ],
                                 )));
                       })),

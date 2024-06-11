@@ -3,16 +3,40 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 // citation:https://github.com/asaddigital2809/datascrap/tree/master
 class DataController extends GetxController {
-  List<String> name = [];
-  List<String> location = [];
+  List<String> header = [];
+  List<String> header2 = [];
+  List<String> time = [];
+  List<String> number = [];
+  List<String> race = [];
+  List<String> status = [];
 
-  void addName(String text) {
-    name.add(text);
+  void addHeader(String text) {
+    header.add(text);
     update();
   }
 
-  void addLocation(String text) {
-    location.add(text);
+  void addHeader2(String text) {
+    header2.add(text);
+    update();
+  }
+
+  void addTime(String text) {
+    time.add(text);
+    update();
+  }
+
+  void addNumber(String text) {
+    number.add(text);
+    update();
+  }
+
+  void addRace(String text) {
+    race.add(text);
+    update();
+  }
+
+  void addStatus(String text) {
+    status.add(text);
     update();
   }
 }
