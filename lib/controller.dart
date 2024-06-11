@@ -6,6 +6,14 @@ class DataController extends GetxController {
   List<String> header = [];
   List<String> header2 = [];
   List<String> time = [];
+  List<String> date = [];
+  List<String> days = [];
+  List<String> events = [];
+  List<String> races = [];
+  List<String> male = [];
+  List<String> female = [];
+  List<String> total = [];
+  List<String> teams = [];
   List<String> number = [];
   List<String> race = [];
   List<String> status = [];
@@ -25,6 +33,46 @@ class DataController extends GetxController {
     update();
   }
 
+  void addDate(String text) {
+    date.add(text);
+    update();
+  }
+
+  void addDays(String text) {
+    days.add(text);
+    update();
+  }
+
+  void addEvents(String text) {
+    events.add(text);
+    update();
+  }
+
+  void addRaces(String text) {
+    races.add(text);
+    update();
+  }
+
+  void addMale(String text) {
+    male.add(text);
+    update();
+  }
+
+  void addFemale(String text) {
+    female.add(text);
+    update();
+  }
+
+  void addTotal(String text) {
+    total.add(text);
+    update();
+  }
+
+  void addTeams(String text) {
+    teams.add(text);
+    update();
+  }
+
   void addNumber(String text) {
     number.add(text);
     update();
@@ -38,5 +86,22 @@ class DataController extends GetxController {
   void addStatus(String text) {
     status.add(text);
     update();
+  }
+
+  void clearData() {
+    header = [];
+    header2 = [];
+    time = [];
+    date = [];
+    days = [];
+    events = [];
+    races = [];
+    male = [];
+    female = [];
+    total = [];
+    teams = [];
+    number = [];
+    race = [];
+    status = [];
   }
 }
