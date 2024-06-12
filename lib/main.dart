@@ -3,8 +3,6 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:row_city/const.dart';
 
 import 'home_page.dart';
-import 'row_town.dart';
-import 'time_team.dart';
 
 void main() {
   runApp(const MainApp());

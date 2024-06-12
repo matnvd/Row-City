@@ -6,6 +6,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 import 'controller.dart';
+import 'r_t_regatta_page.dart';
 
 class RowTownPage extends StatefulWidget {
   const RowTownPage({
@@ -21,8 +22,8 @@ class _RowTownPageState extends State<RowTownPage> {
 
   @override
   void initState() {
-    getData();
     super.initState();
+    getData();
   }
 
   // controller.dart citation
@@ -39,6 +40,7 @@ class _RowTownPageState extends State<RowTownPage> {
     for (int i = 0; i <= 1; i++) {
       var element = document.querySelectorAll('table>tbody')[i];
       var data = element.querySelectorAll('tr');
+      var links = element.querySelectorAll('td>a');
 
       // for the headers
       if (i == 0) {
@@ -51,6 +53,7 @@ class _RowTownPageState extends State<RowTownPage> {
         dataController.addFemale(data[1].children[1].text.toString().trim());
         dataController.addTotal(data[1].children[2].text.toString().trim());
         dataController.addTeams(data[0].children[5].text.toString().trim());
+        dataController.addLink("Place holder link header");
       } else {
         for (int j = 0; j < data.length; j++) {
           dataController.addRace(data[j].children[0].text.toString().trim());
@@ -62,6 +65,7 @@ class _RowTownPageState extends State<RowTownPage> {
           dataController.addFemale(data[j].children[6].text.toString().trim());
           dataController.addTotal(data[j].children[7].text.toString().trim());
           dataController.addTeams(data[j].children[8].text.toString().trim());
+          dataController.addLink(links[j].attributes['href'].toString().trim());
         }
       }
     }
@@ -96,16 +100,47 @@ class _RowTownPageState extends State<RowTownPage> {
                                   children: [
                                     SizedBox(
                                       width: 300,
-                                      child: Text(
+                                      child: InkWell(
+                                        onTap: () {
+                                          Navigator.push(
+                                            context,
+                                            PageRouteBuilder(
+                                              pageBuilder: (context, animation,
+                                                      secondaryAnimation) =>
+                                                  RTRegattaPage(
+                                                      dataController
+                                                          .link[index],
+                                                      dataController
+                                                          .race[index]),
+                                              transitionsBuilder: (context,
+                                                  animation,
+                                                  secondaryAnimation,
+                                                  child) {
+                                                return FadeTransition(
+                                                  opacity: animation,
+                                                  child: child,
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
+                                        child: Text(
                                           dataController.race[index]
                                               .toString()
                                               .trim(),
                                           style: TextStyle(
                                               fontSize: 13,
-                                              color: Colors.black,
+                                              color: index == 0
+                                                  ? Colors.black
+                                                  : hyperLinkColor,
                                               fontWeight: index == 0
                                                   ? FontWeight.bold
-                                                  : FontWeight.normal)),
+                                                  : FontWeight.normal,
+                                              decoration: index == 0
+                                                  ? TextDecoration.none
+                                                  : TextDecoration.underline),
+                                        ),
+                                      ),
                                     ),
                                     // const Spacer(flex: 1),
                                     SizedBox(
@@ -126,7 +161,8 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.days[index]
+                                          dataController.days[
+                                                  index] //get error for some reason? once i move to regatta page?
                                               .toString()
                                               .trim(),
                                           style: TextStyle(

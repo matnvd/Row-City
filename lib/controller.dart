@@ -1,4 +1,3 @@
-import 'package:get/get_core/src/get_main.dart';
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 // citation:https://github.com/asaddigital2809/datascrap/tree/master
@@ -17,6 +16,8 @@ class DataController extends GetxController {
   List<String> number = [];
   List<String> race = [];
   List<String> status = [];
+  List<String> link = [];
+  List<String> results = [];
 
   void addHeader(String text) {
     header.add(text);
@@ -88,6 +89,16 @@ class DataController extends GetxController {
     update();
   }
 
+  void addLink(String text) {
+    link.add(text);
+    update();
+  }
+
+  void addResults(String text) {
+    results.add(text);
+    update();
+  }
+
   void clearData() {
     header = [];
     header2 = [];
@@ -103,5 +114,7 @@ class DataController extends GetxController {
     number = [];
     race = [];
     status = [];
+    link = [];
+    results = [];
   }
 }
