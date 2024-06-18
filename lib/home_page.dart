@@ -13,7 +13,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> with RouteAware {
-  // code credit for routeObersver: https://medium.com/@sumit.ghoshqa/understanding-routeobserver-in-flutter-309ce2997c27
+  // credit for routeObserver: https://medium.com/@sumit.ghoshqa/understanding-routeobserver-in-flutter-309ce2997c27
   @override
   void didChangeDependencies() {
     super.didChangeDependencies();

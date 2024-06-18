@@ -140,9 +140,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                           );
                                         },
                                         child: Text(
-                                          dataController.regatta[index]
-                                              .toString()
-                                              .trim(),
+                                          dataController.regatta[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: index == 0
@@ -162,12 +160,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                       width: 110,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.date.isNotEmpty
-                                              ? dataController.date[
-                                                      index] //get error for some reason? once i move to regatta page?, get 18 errors for each regatta pg, if i remove this part i get error for nxt box
-                                                  .toString()
-                                                  .trim()
-                                              : "Loading...",
+                                          dataController.date[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -179,12 +172,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.days.isNotEmpty
-                                              ? dataController.days[
-                                                      index] //get error for some reason? once i move to regatta page?, get 18 errors for each regatta pg, if i remove this part i get error for nxt box
-                                                  .toString()
-                                                  .trim()
-                                              : "Loading...",
+                                          dataController.days[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -196,11 +184,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.events.isNotEmpty
-                                              ? dataController.events[index]
-                                                  .toString()
-                                                  .trim()
-                                              : "Loading...",
+                                          dataController.events[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -212,11 +196,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.races.isNotEmpty
-                                              ? dataController.races[index]
-                                                  .toString()
-                                                  .trim()
-                                              : "Loading...",
+                                          dataController.races[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -228,11 +208,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.male.isNotEmpty
-                                              ? dataController.male[index]
-                                                  .toString()
-                                                  .trim()
-                                              : "Loading...",
+                                          dataController.male[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -244,11 +220,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.female.isNotEmpty
-                                              ? dataController.female[index]
-                                                  .toString()
-                                                  .trim()
-                                              : "Loading...",
+                                          dataController.female[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -260,11 +232,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.total.isNotEmpty
-                                              ? dataController.total[index]
-                                                  .toString()
-                                                  .trim()
-                                              : "Loading...",
+                                          dataController.total[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -276,11 +244,7 @@ class _RowTownPageState extends State<RowTownPage> with RouteAware {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.teams.isNotEmpty
-                                              ? dataController.teams[index]
-                                                  .toString()
-                                                  .trim()
-                                              : "Loading...",
+                                          dataController.teams[index],
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,

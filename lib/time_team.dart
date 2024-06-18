@@ -46,10 +46,10 @@ class _TimeTeamPageState extends State<TimeTeamPage> {
       dataController.addHeader(heading.text.toString().trim());
       dataController.addHeader2(heading2.text.toString().trim());
       for (int j = 0; j < data.length; j++) {
-        dataController.addTime(data[j].children[0].text.toString().trim());
-        dataController.addNumber(data[j].children[1].text.toString().trim());
-        dataController.addRace(data[j].children[2].text.toString().trim());
-        dataController.addStatus(data[j].children[3].text.toString().trim());
+        dataController.addTimeTT(data[j].children[0].text.toString().trim());
+        dataController.addNumberTT(data[j].children[1].text.toString().trim());
+        dataController.addRaceTT(data[j].children[2].text.toString().trim());
+        dataController.addStatusTT(data[j].children[3].text.toString().trim());
       }
     }
   }
@@ -67,7 +67,7 @@ class _TimeTeamPageState extends State<TimeTeamPage> {
               body: SafeArea(
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: dataController.time.length + 2,
+                      itemCount: dataController.timeTT.length + 2,
                       itemBuilder: (BuildContext context, int index) {
                         // row headers
                         if (index == 0) {
@@ -136,7 +136,7 @@ class _TimeTeamPageState extends State<TimeTeamPage> {
                                     SizedBox(
                                       width: 80,
                                       child: Text(
-                                          dataController.time[index]
+                                          dataController.timeTT[index]
                                               .toString()
                                               .trim(),
                                           style: const TextStyle(
@@ -148,7 +148,7 @@ class _TimeTeamPageState extends State<TimeTeamPage> {
                                     SizedBox(
                                       width: 80,
                                       child: Text(
-                                          dataController.number[index]
+                                          dataController.numberTT[index]
                                               .toString()
                                               .trim(),
                                           style: const TextStyle(
@@ -158,14 +158,14 @@ class _TimeTeamPageState extends State<TimeTeamPage> {
                                     ),
                                     // Spacer(flex: 10),
                                     Text(
-                                        dataController.race[index]
+                                        dataController.raceTT[index]
                                             .toString()
                                             .trim(),
                                         style: const TextStyle(
                                             fontSize: 13, color: Colors.black)),
                                     const Spacer(),
                                     Text(
-                                        dataController.status[index]
+                                        dataController.statusTT[index]
                                             .toString()
                                             .trim(),
                                         style: const TextStyle(

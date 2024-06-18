@@ -1,6 +1,7 @@
 import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
-// citation:https://github.com/asaddigital2809/datascrap/tree/master
+// credits: https://github.com/asaddigital2809/datascrap/tree/master
+
 class DataController extends GetxController {
   // row_town page
   List<String> regatta = [];
@@ -23,7 +24,11 @@ class DataController extends GetxController {
   List<String> results = [];
   List<String> eventLink = [];
 
-  // time-team (maybe sort out other stuff later to separate)
+  // time-team
+  List<String> timeTT = [];
+  List<String> numberTT = [];
+  List<String> raceTT = [];
+  List<String> statusTT = [];
   List<String> header = [];
   List<String> header2 = [];
 
@@ -122,6 +127,26 @@ class DataController extends GetxController {
     update();
   }
 
+  void addTimeTT(String text) {
+    timeTT.add(text);
+    update();
+  }
+
+  void addNumberTT(String text) {
+    numberTT.add(text);
+    update();
+  }
+
+  void addRaceTT(String text) {
+    raceTT.add(text);
+    update();
+  }
+
+  void addStatusTT(String text) {
+    statusTT.add(text);
+    update();
+  }
+
   void clearData() {
     // row_town page
     regatta = [];
@@ -147,5 +172,9 @@ class DataController extends GetxController {
     //time-team
     header = [];
     header2 = [];
+    timeTT = [];
+    numberTT = [];
+    raceTT = [];
+    statusTT = [];
   }
 }
