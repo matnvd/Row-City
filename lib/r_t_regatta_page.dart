@@ -7,15 +7,18 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 import 'controller.dart';
+import 'main.dart';
 import 'r_t_race_page.dart';
 
 class RTRegattaPage extends StatefulWidget {
   final String link;
   final String regatta;
+  final String numDays;
 
   const RTRegattaPage(
     this.link,
-    this.regatta, {
+    this.regatta,
+    this.numDays, {
     super.key,
   });
 
@@ -23,8 +26,14 @@ class RTRegattaPage extends StatefulWidget {
   State<RTRegattaPage> createState() => _RTRegattaPageState();
 }
 
-class _RTRegattaPageState extends State<RTRegattaPage> {
+class _RTRegattaPageState extends State<RTRegattaPage> with RouteAware {
   DataController dataController = Get.put(DataController());
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    ObserverUtils.routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
 
   @override
   void initState() {
@@ -37,7 +46,7 @@ class _RTRegattaPageState extends State<RTRegattaPage> {
     DataController dataController = Get.put(DataController());
     dataController.clearData();
     var url = Uri.parse(
-        "http://rowtown.org/results/${widget.link}"); // regatta central requires a f*cking api key
+        "http://rowtown.org/results/${widget.link}"); // regatta central requires a f*cking api key, show email
     var response = await http.get(url);
     dom.Document document = parser.parse(response.body);
 
@@ -46,27 +55,34 @@ class _RTRegattaPageState extends State<RTRegattaPage> {
       var element = document.querySelectorAll('table')[i];
       var data = element.querySelectorAll('tbody>tr');
       var headers = document.querySelectorAll('thead>tr');
-      var links = element.querySelectorAll('td>a');
+      var eventLinks = element.querySelectorAll('td>a');
 
       // for the headers
       if (i == 0) {
         dataController.addNumber(headers[0].children[1].text.toString().trim());
-        dataController.addDate(headers[0].children[2].text.toString().trim());
+        if (int.parse(widget.numDays) > 1) {
+          dataController
+              .addRaceDate(headers[0].children[2].text.toString().trim());
+        }
         dataController.addTime(headers[0].children[3].text.toString().trim());
         dataController.addRace(headers[0].children[4].text.toString().trim());
         dataController.addStatus(headers[0].children[5].text.toString().trim());
         dataController
             .addResults(headers[0].children[6].text.toString().trim());
-        dataController.addLink("Place holder link header");
+        dataController.addEventLink("Place holder link header");
       } else {
         for (int j = 0; j < data.length; j++) {
           dataController.addNumber(data[j].children[1].text.toString().trim());
-          dataController.addDate(data[j].children[2].text.toString().trim());
+          if (int.parse(widget.numDays) > 1) {
+            dataController
+                .addRaceDate(data[j].children[2].text.toString().trim());
+          }
           dataController.addTime(data[j].children[3].text.toString().trim());
           dataController.addRace(data[j].children[4].text.toString().trim());
           dataController.addStatus(data[j].children[5].text.toString().trim());
           dataController.addResults(data[j].children[6].text.toString().trim());
-          dataController.addLink(links[j].attributes['href'].toString().trim());
+          dataController.addEventLink(
+              eventLinks[j].attributes['href'].toString().trim()); //
         }
       }
     }
@@ -96,8 +112,6 @@ class _RTRegattaPageState extends State<RTRegattaPage> {
                             child: Padding(
                                 padding: const EdgeInsets.all(10),
                                 child: Row(
-                                  // mainAxisAlignment:
-                                  //     MainAxisAlignment.spaceBetween,
                                   children: [
                                     SizedBox(
                                       width: 40,
@@ -114,12 +128,11 @@ class _RTRegattaPageState extends State<RTRegattaPage> {
                                         ),
                                       ),
                                     ),
-                                    // const Spacer(flex: 1),
                                     SizedBox(
                                       width: 130,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.date[index]
+                                          dataController.raceDate[index]
                                               .toString()
                                               .trim(),
                                           style: TextStyle(
@@ -176,7 +189,7 @@ class _RTRegattaPageState extends State<RTRegattaPage> {
                                       child: InkWell(
                                         onTap: () {
                                           _launchURL(
-                                              "http://rowtown.org/results/${dataController.link[index]}");
+                                              "http://rowtown.org/results/${dataController.eventLink[index]}");
                                           /*Navigator.push(
                                             context,
                                             PageRouteBuilder(

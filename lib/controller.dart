@@ -2,9 +2,8 @@ import 'package:get/get_state_manager/src/simple/get_controllers.dart';
 
 // citation:https://github.com/asaddigital2809/datascrap/tree/master
 class DataController extends GetxController {
-  List<String> header = [];
-  List<String> header2 = [];
-  List<String> time = [];
+  // row_town page
+  List<String> regatta = [];
   List<String> date = [];
   List<String> days = [];
   List<String> events = [];
@@ -13,29 +12,33 @@ class DataController extends GetxController {
   List<String> female = [];
   List<String> total = [];
   List<String> teams = [];
+  List<String> link = [];
+
+  // row_town -> regatta page
   List<String> number = [];
+  List<String> raceDate = [];
+  List<String> time = [];
   List<String> race = [];
   List<String> status = [];
-  List<String> link = [];
   List<String> results = [];
+  List<String> eventLink = [];
 
-  void addHeader(String text) {
-    header.add(text);
-    update();
-  }
+  // time-team (maybe sort out other stuff later to separate)
+  List<String> header = [];
+  List<String> header2 = [];
 
-  void addHeader2(String text) {
-    header2.add(text);
-    update();
-  }
-
-  void addTime(String text) {
-    time.add(text);
+  void addRegatta(String text) {
+    regatta.add(text);
     update();
   }
 
   void addDate(String text) {
     date.add(text);
+    update();
+  }
+
+  void addTime(String text) {
+    time.add(text);
     update();
   }
 
@@ -99,10 +102,29 @@ class DataController extends GetxController {
     update();
   }
 
+  void addRaceDate(String text) {
+    raceDate.add(text);
+    update();
+  }
+
+  void addEventLink(String text) {
+    eventLink.add(text);
+    update();
+  }
+
+  void addHeader(String text) {
+    header.add(text);
+    update();
+  }
+
+  void addHeader2(String text) {
+    header2.add(text);
+    update();
+  }
+
   void clearData() {
-    header = [];
-    header2 = [];
-    time = [];
+    // row_town page
+    regatta = [];
     date = [];
     days = [];
     events = [];
@@ -111,10 +133,19 @@ class DataController extends GetxController {
     female = [];
     total = [];
     teams = [];
+    link = [];
+
+    // row_town -> regatta page
     number = [];
+    raceDate = [];
+    time = [];
     race = [];
     status = [];
-    link = [];
     results = [];
+    eventLink = [];
+
+    //time-team
+    header = [];
+    header2 = [];
   }
 }

@@ -6,6 +6,7 @@ import 'package:html/dom.dart' as dom;
 import 'package:html/parser.dart' as parser;
 
 import 'controller.dart';
+import 'main.dart';
 import 'r_t_regatta_page.dart';
 
 class RowTownPage extends StatefulWidget {
@@ -17,8 +18,20 @@ class RowTownPage extends StatefulWidget {
   State<RowTownPage> createState() => _RowTownPageState();
 }
 
-class _RowTownPageState extends State<RowTownPage> {
+class _RowTownPageState extends State<RowTownPage> with RouteAware {
   DataController dataController = Get.put(DataController());
+
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    ObserverUtils.routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
+  // LOADS DATA AND PREVENTS RANGE ERROR!!!
+  void didPopNext() {
+    debugPrint("didPopNext ${runtimeType}");
+    getData();
+  }
 
   @override
   void initState() {
@@ -44,7 +57,7 @@ class _RowTownPageState extends State<RowTownPage> {
 
       // for the headers
       if (i == 0) {
-        dataController.addRace(data[0].children[0].text.toString().trim());
+        dataController.addRegatta(data[0].children[0].text.toString().trim());
         dataController.addDate(data[0].children[1].text.toString().trim());
         dataController.addDays(data[0].children[2].text.toString().trim());
         dataController.addEvents(data[0].children[3].text.toString().trim());
@@ -56,7 +69,7 @@ class _RowTownPageState extends State<RowTownPage> {
         dataController.addLink("Place holder link header");
       } else {
         for (int j = 0; j < data.length; j++) {
-          dataController.addRace(data[j].children[0].text.toString().trim());
+          dataController.addRegatta(data[j].children[0].text.toString().trim());
           dataController.addDate(data[j].children[1].text.toString().trim());
           dataController.addDays(data[j].children[2].text.toString().trim());
           dataController.addEvents(data[j].children[3].text.toString().trim());
@@ -89,7 +102,7 @@ class _RowTownPageState extends State<RowTownPage> {
                   width: 860,
                   child: ListView.builder(
                       shrinkWrap: true,
-                      itemCount: dataController.race.length,
+                      itemCount: dataController.regatta.length,
                       itemBuilder: (BuildContext context, int index) {
                         return Card(
                             child: Padding(
@@ -111,7 +124,9 @@ class _RowTownPageState extends State<RowTownPage> {
                                                       dataController
                                                           .link[index],
                                                       dataController
-                                                          .race[index]),
+                                                          .regatta[index],
+                                                      dataController
+                                                          .days[index]),
                                               transitionsBuilder: (context,
                                                   animation,
                                                   secondaryAnimation,
@@ -125,7 +140,7 @@ class _RowTownPageState extends State<RowTownPage> {
                                           );
                                         },
                                         child: Text(
-                                          dataController.race[index]
+                                          dataController.regatta[index]
                                               .toString()
                                               .trim(),
                                           style: TextStyle(
@@ -147,9 +162,12 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 110,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.date[index]
-                                              .toString()
-                                              .trim(),
+                                          dataController.date.isNotEmpty
+                                              ? dataController.date[
+                                                      index] //get error for some reason? once i move to regatta page?, get 18 errors for each regatta pg, if i remove this part i get error for nxt box
+                                                  .toString()
+                                                  .trim()
+                                              : "Loading...",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -161,10 +179,12 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.days[
-                                                  index] //get error for some reason? once i move to regatta page?
-                                              .toString()
-                                              .trim(),
+                                          dataController.days.isNotEmpty
+                                              ? dataController.days[
+                                                      index] //get error for some reason? once i move to regatta page?, get 18 errors for each regatta pg, if i remove this part i get error for nxt box
+                                                  .toString()
+                                                  .trim()
+                                              : "Loading...",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -176,9 +196,11 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.events[index]
-                                              .toString()
-                                              .trim(),
+                                          dataController.events.isNotEmpty
+                                              ? dataController.events[index]
+                                                  .toString()
+                                                  .trim()
+                                              : "Loading...",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -190,9 +212,11 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.races[index]
-                                              .toString()
-                                              .trim(),
+                                          dataController.races.isNotEmpty
+                                              ? dataController.races[index]
+                                                  .toString()
+                                                  .trim()
+                                              : "Loading...",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -204,9 +228,11 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.male[index]
-                                              .toString()
-                                              .trim(),
+                                          dataController.male.isNotEmpty
+                                              ? dataController.male[index]
+                                                  .toString()
+                                                  .trim()
+                                              : "Loading...",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -218,9 +244,11 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.female[index]
-                                              .toString()
-                                              .trim(),
+                                          dataController.female.isNotEmpty
+                                              ? dataController.female[index]
+                                                  .toString()
+                                                  .trim()
+                                              : "Loading...",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -232,9 +260,11 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.total[index]
-                                              .toString()
-                                              .trim(),
+                                          dataController.total.isNotEmpty
+                                              ? dataController.total[index]
+                                                  .toString()
+                                                  .trim()
+                                              : "Loading...",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,
@@ -246,9 +276,11 @@ class _RowTownPageState extends State<RowTownPage> {
                                       width: 60,
                                       child: Text(
                                           textAlign: TextAlign.center,
-                                          dataController.teams[index]
-                                              .toString()
-                                              .trim(),
+                                          dataController.teams.isNotEmpty
+                                              ? dataController.teams[index]
+                                                  .toString()
+                                                  .trim()
+                                              : "Loading...",
                                           style: TextStyle(
                                               fontSize: 13,
                                               color: Colors.black,

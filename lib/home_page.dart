@@ -3,6 +3,7 @@ import 'package:row_city/row_town.dart';
 import 'package:row_city/time_team.dart';
 
 import 'const.dart';
+import 'main.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});
@@ -11,7 +12,14 @@ class HomePage extends StatefulWidget {
   State<HomePage> createState() => _HomePageState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomePageState extends State<HomePage> with RouteAware {
+  // code credit for routeObersver: https://medium.com/@sumit.ghoshqa/understanding-routeobserver-in-flutter-309ce2997c27
+  @override
+  void didChangeDependencies() {
+    super.didChangeDependencies();
+    ObserverUtils.routeObserver.subscribe(this, ModalRoute.of(context)!);
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(

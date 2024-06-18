@@ -15,6 +15,7 @@ class MainApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: const HomePage(),
+      navigatorObservers: <NavigatorObserver>[ObserverUtils.routeObserver],
       theme: ThemeData(
         fontFamily: GoogleFonts.poppins().fontFamily,
         appBarTheme: const AppBarTheme(
@@ -39,4 +40,9 @@ class MainApp extends StatelessWidget {
       ),
     );
   }
+}
+
+class ObserverUtils {
+  static final RouteObserver<ModalRoute> routeObserver =
+      RouteObserver<ModalRoute>();
 }
